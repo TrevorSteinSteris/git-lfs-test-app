@@ -13,8 +13,27 @@ set(LIBRARY_PERMISSIONS
     GROUP_READ
     GROUP_EXECUTE
     WORLD_READ)
-
 set(HEADER_FILE_PERMISSIONS
     OWNER_READ
     GROUP_READ
     WORLD_READ)
+set(EXECUTABLE_PERMISSIONS 
+        OWNER_READ 
+        OWNER_WRITE
+        OWNER_EXECUTE
+        GROUP_READ
+        GROUP_EXECUTE
+        WORLD_READ)
+set(RELATIVE_LIB_SUBMODULE_DIR "git-lfs-test-lib/Bin/release_install")
+set(LIB_SUBMODULE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/${RELATIVE_LIB_SUBMODULE_DIR}")
+set(LIB_SUBMODULE_CMAKE_DIR "${LIB_SUBMODULE_DIR}/Cmake")
+
+# Include library CMake
+include(${LIB_SUBMODULE_CMAKE_DIR}/lib-install-package-def.cmake)
+
+# Test app compilation
+set(TEST_APP test-app)
+add_executable(${TEST_APP} TestApp.cpp)
+target_include_directories(${TEST_APP} PRIVATE ${PROJECT_INCLUDE_DIR})
+target_link_libraries(${TEST_APP} PRIVATE ${TEST_LIB_NAME})
+install(TARGETS ${TEST_APP} DESTINATION ${APP_INSTALL_DIR} PERMISSIONS ${EXECUTABLE_PERMISSIONS})
