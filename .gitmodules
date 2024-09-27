@@ -1,0 +1,4 @@
+[submodule "git-lfs-test-lib"]
+	path = git-lfs-test-lib
+	url = https://github.com/TrevorSteinSteris/git-lfs-test-lib
+	branch = main
